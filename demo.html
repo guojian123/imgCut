@@ -1,0 +1,83 @@
+<html>
+	<head>
+		<title>图片切割测试</title>
+		<LINK href="css/jquery.Jcrop.css" type="text/css" rel="Stylesheet" media="screen">
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
+		<script type="text/javascript" src="js/jQuery.UtrialAvatarCutter.js"></script>
+		<style>
+		#div_wrap{
+			float: left;
+		}
+			#div_wrap div{
+				float: none;
+				margin-bottom: 10px;
+			}
+			#picture_original{
+				float: left;
+				width: 500px;
+				height: 300px;
+				text-align: center;
+				background: #ccc;
+			}
+			#picture_original img{
+				max-width: 500px;
+				max-height: 300px;
+			}
+			.jcrop-holder{
+				margin: 0 auto;
+			}
+			/*.jcrop-holder img{*/
+				/*max-width: 500px;*/
+				/*max-height: 300px;*/
+			/*}*/
+		</style>
+	</head>
+	<body>
+		<!--
+			原始图
+		-->
+		<div id="picture_original">
+			<img src="images/non_play.jpg"/>
+		</div>
+		<!---
+			缩略图
+		-->
+		<div id="div_wrap">
+			<div id="picture_120"></div>
+			<div id="picture_80"></div>
+			<div id="picture_50"></div>
+		</div>
+		
+		<br>
+		<SCRIPT type="text/javascript">
+			var cutter = new jQuery.UtrialAvatarCutter(
+				{
+					//主图片所在容器ID
+					content : "picture_original",
+					
+					//缩略图配置,ID:所在容器ID;width,height:缩略图大小
+					purviews : [{id:"picture_120",width:120,height:120},{id:"picture_80",width:80,height:80},{id:"picture_50",width:50,height:50}],
+					
+					//选择器默认大小
+					selector : {width:150,height:150}
+				}
+			);
+	
+			$(window).load(function(){
+				cutter.init();
+				var picture_original = $("#picture_original").height();
+				var jcrop_holder = $(".jcrop-holder").height();
+				$(".jcrop-holder").css({marginTop:(picture_original - jcrop_holder)/2});
+				//确定按钮动作
+				$("#save_btn").click(
+					function(){
+						var data = cutter.submit();
+						alert("x="+data.x+"\ny="+data.y+"\nw="+data.w+"\nh="+data.h+"\ns="+data.s);
+					}
+				);
+			});
+		</SCRIPT>
+	</body>
+</html>
